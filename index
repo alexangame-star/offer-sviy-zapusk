@@ -1,0 +1,352 @@
+import { useState } from "react";
+
+const Section = ({ title, icon, children, accent = "#C9A84C" }) => (
+  <div style={{
+    background: "#0F0F0F",
+    border: `1px solid #1E1E1E`,
+    borderRadius: 2,
+    padding: "28px 32px",
+    position: "relative",
+    overflow: "hidden"
+  }}>
+    <div style={{
+      position: "absolute", top: 0, left: 0,
+      width: 3, height: "100%", background: accent
+    }} />
+    <div style={{
+      display: "flex", alignItems: "center", gap: 10,
+      marginBottom: 20
+    }}>
+      <span style={{ fontSize: 18 }}>{icon}</span>
+      <h2 style={{
+        color: accent, fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: 18, fontWeight: 600, letterSpacing: "0.08em",
+        textTransform: "uppercase", margin: 0
+      }}>{title}</h2>
+    </div>
+    {children}
+  </div>
+);
+
+const Row = ({ label, value, highlight }) => (
+  <div style={{
+    display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+    padding: "10px 0",
+    borderBottom: "1px solid #1A1A1A"
+  }}>
+    <span style={{ color: "#888", fontSize: 13, fontFamily: "monospace", flex: 1 }}>{label}</span>
+    <span style={{
+      color: highlight ? "#C9A84C" : "#E8E8E8",
+      fontSize: 13, fontWeight: highlight ? 600 : 400,
+      textAlign: "right", maxWidth: "55%"
+    }}>{value}</span>
+  </div>
+);
+
+const Tag = ({ children, color = "#C9A84C" }) => (
+  <span style={{
+    background: color + "15",
+    border: `1px solid ${color}40`,
+    color: color,
+    fontSize: 11,
+    padding: "3px 10px",
+    borderRadius: 1,
+    fontFamily: "monospace",
+    letterSpacing: "0.05em"
+  }}>{children}</span>
+);
+
+const List = ({ items, color = "#C9A84C" }) => (
+  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+    {items.map((item, i) => (
+      <li key={i} style={{
+        display: "flex", gap: 10, alignItems: "flex-start",
+        padding: "7px 0", borderBottom: "1px solid #161616",
+        color: "#C8C8C8", fontSize: 13, lineHeight: 1.6
+      }}>
+        <span style={{ color, marginTop: 2, flexShrink: 0 }}>▸</span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+export default function Offer() {
+  const [tab, setTab] = useState("roles");
+
+  const tabs = [
+    { id: "roles", label: "Ролі" },
+    { id: "budget", label: "Бюджет" },
+    { id: "goals", label: "Цілі" },
+  ];
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#080808",
+      fontFamily: "'Inter', system-ui, sans-serif",
+      padding: "48px 24px",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap');
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+      `}</style>
+
+      <div style={{ maxWidth: 680, margin: "0 auto" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 48, textAlign: "center" }}>
+          <p style={{
+            color: "#C9A84C", fontFamily: "monospace", fontSize: 11,
+            letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px"
+          }}>Пропозиція до співпраці · 2026</p>
+          <h1 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: "clamp(32px, 6vw, 52px)",
+            fontWeight: 400, color: "#F0F0F0",
+            margin: "0 0 16px", lineHeight: 1.15,
+            letterSpacing: "0.02em"
+          }}>Продюсер<br /><span style={{ color: "#C9A84C" }}>× Експерт</span></h1>
+          <p style={{ color: "#555", fontSize: 13, margin: 0 }}>
+            Запуск міні-курсу · Перші результати · Масштабування
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div style={{
+          display: "flex", gap: 2, marginBottom: 32,
+          background: "#0F0F0F", padding: 4, border: "1px solid #1E1E1E", borderRadius: 2
+        }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)} style={{
+              flex: 1, padding: "10px 16px",
+              background: tab === t.id ? "#C9A84C" : "transparent",
+              color: tab === t.id ? "#080808" : "#666",
+              border: "none", cursor: "pointer",
+              fontFamily: "monospace", fontSize: 12,
+              letterSpacing: "0.08em", textTransform: "uppercase",
+              fontWeight: tab === t.id ? 600 : 400,
+              borderRadius: 1, transition: "all 0.2s"
+            }}>{t.label}</button>
+          ))}
+        </div>
+
+        {/* Roles */}
+        {tab === "roles" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <Section title="Продюсер & Стратег — наша зона" icon="⚡" accent="#C9A84C">
+              <List items={[
+                "Стратегія запуску: структура, таймінги, воронка продажів",
+                "Розробка оферу і позиціонування продукту",
+                "Лендінг: розробка структури, тексти, дизайн-постановка",
+                "Підключення систем оплат, кабінетів, автоматизацій",
+                "Побудова воронки: трафік → лід → оплата",
+                "Технічна підвʼязка сервісів (бот Telegram, платіжні системи)",
+                "Створення та/або постановка технічного завдання на креативи",
+                "Ведення реклами в першому запуску — повністю на нас (включено у фікс)",
+                "Аналіз результатів, коригування стратегії",
+                "Формування продуктової лінійки після першого запуску",
+              ]} />
+            </Section>
+
+            <Section title="Експерт — зона відповідальності" icon="🎯" accent="#7B9E87">
+              <List items={[
+                "Контент і наповнення курсу: уроки, матеріали, практики",
+                "Запис або проведення уроків у погодженому форматі",
+                "Ведення своїх соцмереж / Telegram у поточному ритмі",
+                "Участь у прогрівах та анонсах за погодженим планом",
+                "Оперативний звʼязок і фідбек у процесі роботи",
+                "Надання матеріалів і кейсів для маркетингових текстів",
+                "Комунікація зі студентами під час курсу",
+              ]} color="#7B9E87" />
+            </Section>
+
+            {/* Ad management clarity block */}
+            <div style={{
+              background: "#0F0F0F", border: "1px solid #E8634330",
+              borderRadius: 2, padding: "20px 24px",
+              display: "flex", alignItems: "flex-start", gap: 12
+            }}>
+              <span style={{ fontSize: 18, flexShrink: 0 }}>⚠️</span>
+              <div>
+                <p style={{ color: "#E86343", fontFamily: "monospace", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 8px" }}>Важливо · Реклама</p>
+                <p style={{ color: "#888", fontSize: 13, margin: 0, lineHeight: 1.7 }}>
+                  <span style={{ color: "#E8E8E8" }}>Перший запуск реклами — повністю на нашій стороні</span>, це включено у фіксовану оплату. Після отримання перших результатів ведення реклами делегується: або на окремого таргетолога (на стороні експерта), або залишається за нами — але вже <span style={{ color: "#C9A84C" }}>як окрема послуга з додатковою оплатою</span>. Це обговорюється після першого запуску.
+                </p>
+              </div>
+            </div>
+
+            <div style={{
+              background: "#0F0F0F", border: "1px solid #C9A84C30",
+              borderRadius: 2, padding: "20px 24px",
+              display: "flex", alignItems: "flex-start", gap: 12
+            }}>
+              <span style={{ color: "#C9A84C", fontSize: 20, flexShrink: 0 }}>◈</span>
+              <p style={{ color: "#888", fontSize: 13, margin: 0, lineHeight: 1.7 }}>
+                Перший місяць — <span style={{ color: "#C9A84C" }}>фіксована оплата 500€</span>.
+                За результатами запуску переходимо на обговорення формату з відсотком від виручки.
+                Умови фіксуються письмово до старту.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Budget */}
+        {tab === "budget" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* What's included in fix */}
+            <Section title="Що входить у фікс 500€" icon="✅" accent="#C9A84C">
+              <p style={{ color: "#666", fontSize: 12, fontFamily: "monospace", margin: "0 0 12px", letterSpacing: "0.05em", textTransform: "uppercase" }}>Ми повністю покриваємо:</p>
+              <List items={[
+                "Стратегія і план запуску — від ідеї до продажу",
+                "Розробка оферу і структури курсу",
+                "Написання текстів для лендінгу",
+                "Постановка ТЗ і контроль розробки лендінгу",
+                "Побудова воронки продажів у Telegram",
+                "Технічна підвʼязка систем оплат і доступу до курсу",
+                "Створення рекламних креативів (банери, тексти)",
+                "Ведення рекламної кампанії в першому запуску",
+                "Аналіз результатів і підсумковий звіт",
+              ]} />
+            </Section>
+
+            {/* Cost breakdown */}
+            <Section title="Витрати на запуск" icon="💰" accent="#C9A84C">
+              <Row label="Продюсер / стратег — фікс (місяць 1)" value="500 €" highlight />
+              <Row label="Розробка лендінгу" value="200 – 300 $" />
+              <Row label="Сервіси: Telegram-бот, платіжка, платформа" value="50 – 100 $" />
+              <Row label="Рекламний бюджет" value="500 – 1 000 $" />
+              <div style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "14px 0 0", marginTop: 4,
+                borderTop: "1px solid #252525"
+              }}>
+                <span style={{ color: "#C9A84C", fontFamily: "monospace", fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>Разом орієнтовно</span>
+                <span style={{ color: "#F0F0F0", fontWeight: 600, fontSize: 14 }}>≈ 1 750 – 2 400 $</span>
+              </div>
+            </Section>
+
+            {/* ROI logic */}
+            <div style={{
+              background: "#0F0F0F", border: "1px solid #7B9E8740",
+              borderRadius: 2, padding: "20px 24px",
+              display: "flex", alignItems: "flex-start", gap: 12
+            }}>
+              <span style={{ fontSize: 18, flexShrink: 0 }}>📊</span>
+              <div>
+                <p style={{ color: "#7B9E87", fontFamily: "monospace", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 8px" }}>Логіка окупності</p>
+                <p style={{ color: "#888", fontSize: 13, margin: 0, lineHeight: 1.7 }}>
+                  Мінімальний рекламний бюджет — <span style={{ color: "#E8E8E8" }}>500–1 000 $</span>. Планова мінімальна ціль: повністю окупити саме цей бюджет за рахунок продажів міні-курсу. Тобто <span style={{ color: "#C9A84C" }}>витрати на лендінг, сервіси і продюсера — залишаться</span>, і це нормально для першого запуску: ми тестуємо офер і збираємо систему. Оптимальна ціль: вийти у плюс і покрити всі витрати повністю. Лендінг, воронка і матеріали залишаються у вас і працюють далі.
+                </p>
+              </div>
+            </div>
+
+            {/* Net costs after ad recovery */}
+            <Section title="Витрати після окупності реклами" icon="🧾" accent="#7B9E87">
+              <p style={{ color: "#555", fontSize: 12, fontFamily: "monospace", margin: "0 0 12px", letterSpacing: "0.05em" }}>якщо реклама окупилась → залишаються витрати:</p>
+              <Row label="Продюсер / стратег (фікс)" value="500 €" highlight />
+              <Row label="Розробка лендінгу" value="200 – 300 $" />
+              <Row label="Сервіси: бот, платіжка, платформа" value="50 – 100 $" />
+              <div style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "14px 0 0", marginTop: 4, borderTop: "1px solid #252525"
+              }}>
+                <span style={{ color: "#7B9E87", fontFamily: "monospace", fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>Чисті витрати</span>
+                <span style={{ color: "#F0F0F0", fontWeight: 600, fontSize: 14 }}>≈ 750 – 900 $</span>
+              </div>
+              <p style={{ color: "#555", fontSize: 12, margin: "12px 0 0", lineHeight: 1.6 }}>
+                Ці витрати — разові. Лендінг і система залишаються і окупаються з наступних запусків або апсейлів.
+              </p>
+            </Section>
+
+            {/* Payment split */}
+            <div style={{
+              background: "#0F0F0F", border: "1px solid #C9A84C30",
+              borderRadius: 2, padding: "20px 24px"
+            }}>
+              <p style={{ color: "#C9A84C", fontFamily: "monospace", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 14px" }}>💳 Оплата продюсера — можливість розбити</p>
+              <div style={{ display: "flex", gap: 12 }}>
+                <div style={{
+                  flex: 1, background: "#151515", border: "1px solid #252525",
+                  borderRadius: 2, padding: "14px 16px", textAlign: "center"
+                }}>
+                  <div style={{ color: "#C9A84C", fontSize: 22, fontWeight: 600, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>50%</div>
+                  <div style={{ color: "#666", fontSize: 12, marginTop: 4 }}>До старту роботи</div>
+                </div>
+                <div style={{
+                  display: "flex", alignItems: "center",
+                  color: "#333", fontSize: 20
+                }}>+</div>
+                <div style={{
+                  flex: 1, background: "#151515", border: "1px solid #252525",
+                  borderRadius: 2, padding: "14px 16px", textAlign: "center"
+                }}>
+                  <div style={{ color: "#C9A84C", fontSize: 22, fontWeight: 600, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>50%</div>
+                  <div style={{ color: "#666", fontSize: 12, marginTop: 4 }}>Через 15–20 днів роботи</div>
+                </div>
+              </div>
+              <p style={{ color: "#555", fontSize: 12, margin: "12px 0 0", lineHeight: 1.6 }}>
+                Розбивка стосується лише фіксованої винагороди продюсера. Лендінг, сервіси і рекламний бюджет — за окремими рахунками у відповідний момент.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Goals */}
+        {tab === "goals" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <Section title="Мета першого місяця" icon="🎯" accent="#C9A84C">
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  <Tag>Мінімум: окупність в 0</Tag>
+                  <Tag color="#7B9E87">Оптимально: прибутковий запуск</Tag>
+                </div>
+              </div>
+              <List items={[
+                "Сформувати і протестувати ринковий офер міні-курсу",
+                "Зібрати воронку: трафік → лендінг → оплата → курс",
+                "Отримати перші реальні кейси та відгуки студентів",
+                "Зрозуміти вартість залученого клієнта (CAC)",
+                "Визначити найефективніший канал трафіку для масштабування",
+              ]} />
+            </Section>
+
+            <Section title="Що буде зроблено" icon="✅" accent="#7B9E87">
+              <List items={[
+                "Структура міні-курсу (модулі, формат, логіка)",
+                "Офер: позиціонування, біль → рішення → результат",
+                "Лендінг зі блоками продажу і формою оплати",
+                "Воронка в Telegram (прогрів → продаж)",
+                "Підключення систем оплат і передачі доступу",
+                "Комплект рекламних креативів для запуску",
+                "Запуск і ведення рекламної кампанії",
+                "Аналіз результатів і звіт після завершення",
+              ]} color="#7B9E87" />
+            </Section>
+
+            <Section title="Після запуску" icon="📈" accent="#C9A84C">
+              <List items={[
+                "Формування продуктової лінійки: міні-курс → основний курс → менторство",
+                "Перехід на формат роботи з % від виручки (обговорюється окремо)",
+                "Масштабування трафіку на перевіреному офері",
+                "Побудова системи повторних продажів та апсейлів",
+              ]} />
+            </Section>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div style={{
+          marginTop: 40, textAlign: "center",
+          borderTop: "1px solid #161616", paddingTop: 24
+        }}>
+          <p style={{ color: "#333", fontSize: 11, fontFamily: "monospace", letterSpacing: "0.1em" }}>
+            СВІЙ ЗАПУСК · ПРОДЮСЕР × ЕКСПЕРТ
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
